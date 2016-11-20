@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>MARTA Army | TimelyTrip</title>
+	<style>
+	body { font-family: sans-serif; } 
+	h1, div.container { width: 900px; margin: auto; } 
+	.stopdetail { border: 1px solid #aaa; background-color: #eee; width: 250px; padding: 10px; float: left; margin: 0 10px 10px 0;}
+	.stopdetail a.remove-link { font-size: 10px; }
+	#add-another-trigger { font-size: 12px; padding: 10px; }
+	#make-signs-trigger { margin-top: 20px; }
+	</style>
+</head>
+<body>
+	<h1><img src="img/timelytrip_white.png" width="500" style="background-color:#404040;" /></h1>
+
+	<div class='container'>
+		<p>Stop ID (<a href="http://atlanta.onebusaway.org/where/standard/" target="_blank">Lookup on OneBusAway</a>)</p>
+		<div id='stopdetails-container'>
+			
+		</div>
+		
+		<br style='clear:both; padding-bottom: 20px;'/>
+		<a href='#' id='add-another-trigger'>Add Another Stop</a>
+		<button id='make-signs-trigger'>Make Signs</button>
+	</div>
+
+	<div id='stopdetail-template' style='display: none'>
+		<select name="agency">
+			<option value="MARTA" selected="selected">MARTA</option>
+		</select>
+		<input type="text" class="sid" value="" />
+
+		<p>Adopted by:
+		<br/><input type="text" class="adopter" value="" /></p>
+		<a href='#' class='remove-link'>Remove</a>
+	</div>
+
+	<script type='text/javascript' src='jquery.js'></script>
+	<script type='text/javascript'>
+	$('#add-another-trigger').click(function() {
+		addStop('', '');
+	});
+
+	addStop('901229', 'George P. Burdell');
+
+	function addStop(stopid, adopter) {
+		var $sd = $('#stopdetail-template').clone();
+		$sd.find('input.sid').val(stopid);
+		$sd.find('input.adopter').val(adopter);
+		$('#stopdetails-container').append($sd.addClass('stopdetail').show());
+
+	}
+	$(document).on('click', '.stopdetail a.remove-link', function() {
+		var $sd = $(this).closest('.stopdetail');
+		$sd.fadeOut(function() { $sd.remove() });
+	});
+
+	$('#make-signs-trigger').click(function() {
+		var urlbase = 'signs.php?';
+		$('.stopdetail').each(function(i, el) {
+			var $sd = $(el);
+			var agency = $sd.find('select').val();
+			var sid = $sd.find('input.sid').val();
+			var adopter = $sd.find('input.adopter').val();
+			urlbase += "sids[]="+agency+"_"+sid+"&adopters[]="+adopter+"&";
+		})
+		window.location.href = urlbase;
+	});
+
+	</script>
+</body>
+</html>

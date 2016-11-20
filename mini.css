@@ -1,0 +1,98 @@
+@font-face {
+	font-family: "Sweet Sans Pro";
+	src: url(fonts/SweetSansPro-Regular.otf);
+}
+@font-face {
+	font-family: "Sweet Sans Pro";
+	font-weight: bold; 
+	src: url(fonts/SweetSansPro-Bold.otf);
+}
+
+body { margin: 0; font-family: "Sweet Sans Pro", "Source Sans Pro", "Montserrat", sans-serif;}
+
+#content-box-sizing,
+.header, .buses, .places, .bus, div.title {box-sizing: border-box;}
+
+#reduced-line-height,
+h2, th, .places, .disclaimer, .waypoints, .footer .cell, .stopid {line-height:90%;}
+
+.mini-sign {
+	box-sizing: border-box;
+	float: left;
+	text-align: center;
+	width: 180px;
+	height: 240px;
+	border: 1px solid #BBBBBB;
+	line-height:100%;
+	position: relative;
+	padding-top:25px;
+
+	background-image: url(img/timelytrip_mini2.png);
+	background-size: 180px 25px;
+	background-repeat: no-repeat;
+	background-position-y: 0%;
+
+}
+.mini-sign .QR-text {
+	clear: both;
+	font-size:80%;
+}
+.mini-sign img {
+	width: 75%;
+}
+.mini-sign .stopid {
+	-webkit-transform: rotate(270deg);	
+	-moz-transform: rotate(270deg);
+	-ms-transform: rotate(270deg);
+	-o-transform: rotate(270deg);
+	transform: rotate(270deg);
+	width: 10%;
+	left: 0;
+	top: 65%;
+	position: absolute;
+}
+
+.buses { height: 56px;}
+.bus { border-bottom: 1px solid #B0B0B0; width:100%; overflow: hidden;}
+.bus .title.route1 { background-color:#ffb3d1; } 
+.bus .title.route2 { background-color:#b3d9ff; } 
+.bus .title.route3 { background-color:#c2f0c2; } 
+.bus .title h3 { margin: 0px 4px 0px 0px; padding:0; color: #FFFFFF; height:60%; float: left; background-color: #808080; min-width:2em; text-align:center; } 
+.bus .title h3.route1 { color:#ff0066; border-bottom: 8px solid #ff0066; } 
+.bus .title h3.route2 { color:#0066cc; border-bottom: 8px solid #0066cc; } 
+.bus .title h3.route3 { color:#29a329; border-bottom: 8px solid #29a329; } 
+
+/*.bus .title.MARTA h3 {color: #00aeef; }*/
+/*.bus .title.MARTA { background-color: #00aeef; }
+.bus .title.CCT { background-color: #cc66ff; }
+.bus .title.GCT { background-color: #c41013; }
+.bus .title.GRTA { background-color: #66cc99; }*/
+.bus .title .origin-destination { font-weight:bold; white-space: nowrap; width:100%;}
+.bus .title .waypoints { font-size:18px; padding-top:3px; display:none; }
+
+.bus table { border-collapse:collapse; }
+.bus table.schedule { margin-left: auto; margin-right: auto; clear: both;}
+.bus table.schedule th { text-align: left; padding-left: 10pt; font-weight:normal; }
+.bus table.schedule th, .bus table.schedule td { border-right: 1px solid #ccc; vertical-align: top; }
+.bus table.schedule th:last-child, .bus table.schedule td:last-child { border-right: none; }
+.bus table.schedule td ul { list-style-type: none; padding: 0px; margin:0px; white-space: nowrap; }
+.bus table.schedule td ul li { white-space: nowrap; }
+.bus table.schedule td ul li.ampm-heading { margin:5px 0 -5px 0; padding:0; line-height:100%; text-align:center; background-color:#ddd; font-size:12px; }
+/*.bus table.schedule td ul li.pm { font-weight:bold; }*/
+.bus table.schedule td ul li span {	display: inline-block; width: 2.3em; text-align:left; }
+.bus table.schedule td ul li span:first-child {width: 1.4em; text-align:right;}
+
+
+.footer { clear: both; height: 130px; background-color: #FFFFFF; overflow: hidden; position: relative; }
+.footer .disclaimer { clear:both; font-size: 14px; padding-left: 15px; color: #555; padding-bottom:10px;}
+.footer .adopter { position: relative;top: 0px; left: 15px; width: 300px; }
+.footer .adopter .adopterName {display:inline-block; font-size: 30px; margin-top:15px; font-weight:bold; }
+.footer .cell {width:33%; float:left; }
+.footer .cell-cleanup {clear:both; height:0px; }
+.footer .QR-text { float: right; }
+.footer img.QR { float: right; margin-left:0px; }
+.footer p { margin: 0; padding-top:0px; }
+
+#footer_content_height,
+.army_signup, .footer img.QR {height:80px;  }
+
