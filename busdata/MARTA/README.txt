@@ -1,0 +1,1 @@
+Extract MARTA's GTFS text/csv data files here before you can run digest_gtfs.php.
