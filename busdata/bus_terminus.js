@@ -26,8 +26,8 @@ var bus_terminus = [
 	{
 		"route_num" : "114",
 		"route_id" : 7696,
-		"stop_id" : 211723,
-		"stop_name" : "CLIFTON SPRINGS HEALTH CTR"
+		"stop_id" : 153028,
+		"stop_name" : "GSU DECATUR"
 	},
 	{
 		"route_num" : "115",
@@ -80,20 +80,14 @@ var bus_terminus = [
 	{
 		"route_num" : "121",
 		"route_id" : 7702,
-		"stop_id" : 211482,
-		"stop_name" : "GOLDSMITH PARK & RIDE"
-	},
-	{
-		"route_num" : "121",
-		"route_id" : 7702,
 		"stop_id" : 211503,
 		"stop_name" : "LAUREN PKWY"
 	},
 	{
-		"route_num" : "123",
-		"route_id" : 7703,
-		"stop_id" : 211618,
-		"stop_name" : "FAIRLEE DR"
+		"route_num" : "121",
+		"route_id" : 7702,
+		"stop_id" : 211482,
+		"stop_name" : "GOLDSMITH PARK & RIDE"
 	},
 	{
 		"route_num" : "123",
@@ -186,12 +180,6 @@ var bus_terminus = [
 		"stop_name" : "POLAR ROCK"
 	},
 	{
-		"route_num" : "16",
-		"route_id" : 7645,
-		"stop_id" : 902986,
-		"stop_name" : "EXECUTIVE PARK"
-	},
-	{
 		"route_num" : "162",
 		"route_id" : 7715,
 		"stop_id" : 144118,
@@ -254,14 +242,14 @@ var bus_terminus = [
 	{
 		"route_num" : "186",
 		"route_id" : 7724,
-		"stop_id" : 211898,
-		"stop_name" : "E WESLEY CHAPEL"
+		"stop_id" : 211627,
+		"stop_name" : "PRYOR ST SE @ WALL ST SE"
 	},
 	{
 		"route_num" : "186",
 		"route_id" : 7724,
-		"stop_id" : 211627,
-		"stop_name" : "PRYOR ST SE @ WALL ST SE"
+		"stop_id" : 211898,
+		"stop_name" : "E WESLEY CHAPEL"
 	},
 	{
 		"route_num" : "189",
@@ -314,26 +302,20 @@ var bus_terminus = [
 	{
 		"route_num" : "196",
 		"route_id" : 7731,
-		"stop_id" : 212168,
-		"stop_name" : "SOUTHLAKE MALL"
+		"stop_id" : 212141,
+		"stop_name" : "LAMAR HUTCHESON PKY @ VALLEY HILL RD SW"
 	},
 	{
 		"route_num" : "196",
 		"route_id" : 7731,
-		"stop_id" : 212141,
-		"stop_name" : "LAMAR HUTCHESON PKY @ VALLEY HILL RD SW"
+		"stop_id" : 212168,
+		"stop_name" : "SOUTHLAKE MALL"
 	},
 	{
 		"route_num" : "201",
 		"route_id" : 7732,
 		"stop_id" : 555300,
 		"stop_name" : "SIX FLAGS PKY@SERVICE RD"
-	},
-	{
-		"route_num" : "201",
-		"route_id" : 7732,
-		"stop_id" : 901140,
-		"stop_name" : "MARTIN LUTHER KING J DR@STONEHURST"
 	},
 	{
 		"route_num" : "21",
@@ -357,7 +339,7 @@ var bus_terminus = [
 		"route_num" : "3",
 		"route_id" : 7636,
 		"stop_id" : 901227,
-		"stop_name" : "MLK CENTER"
+		"stop_name" : "H MILLS CENTER"
 	},
 	{
 		"route_num" : "30",
@@ -393,7 +375,7 @@ var bus_terminus = [
 		"route_num" : "4",
 		"route_id" : 7637,
 		"stop_id" : 151060,
-		"stop_name" : "METRO TRANSITIONAL"
+		"stop_name" : "METRO TRANSITIONAL CTR"
 	},
 	{
 		"route_num" : "49",
@@ -404,14 +386,14 @@ var bus_terminus = [
 	{
 		"route_num" : "50",
 		"route_id" : 7662,
-		"stop_id" : 904232,
-		"stop_name" : "CARROLL HEIGHTS"
+		"stop_id" : 903509,
+		"stop_name" : "CROFT PL"
 	},
 	{
 		"route_num" : "50",
 		"route_id" : 7662,
-		"stop_id" : 903509,
-		"stop_name" : "CROFT PL"
+		"stop_id" : 903825,
+		"stop_name" : "FULTON INDUS OLD GORDON RD"
 	},
 	{
 		"route_num" : "51",
@@ -434,14 +416,14 @@ var bus_terminus = [
 	{
 		"route_num" : "56",
 		"route_id" : 7666,
-		"stop_id" : 901079,
-		"stop_name" : "DOLLAR MILL RD"
+		"stop_id" : 900754,
+		"stop_name" : "PLAINVILLE CIR"
 	},
 	{
 		"route_num" : "56",
 		"route_id" : 7666,
-		"stop_id" : 900754,
-		"stop_name" : "PLAINVILLE CIR"
+		"stop_id" : 901079,
+		"stop_name" : "DOLLAR MILL RD"
 	},
 	{
 		"route_num" : "58",
@@ -470,14 +452,14 @@ var bus_terminus = [
 	{
 		"route_num" : "68",
 		"route_id" : 7671,
-		"stop_id" : 122316,
-		"stop_name" : "BENJAMIN E MAYS DR"
+		"stop_id" : 900195,
+		"stop_name" : "GORDON ST @ ALVARADO"
 	},
 	{
 		"route_num" : "68",
 		"route_id" : 7671,
-		"stop_id" : 900195,
-		"stop_name" : "GORDON ST @ ALVARADO"
+		"stop_id" : 122316,
+		"stop_name" : "BENJAMIN E MAYS DR"
 	},
 	{
 		"route_num" : "71",
@@ -560,8 +542,8 @@ var bus_terminus = [
 	{
 		"route_num" : "84",
 		"route_id" : 7681,
-		"stop_id" : 144118,
-		"stop_name" : "N CAMP CREEK PKWY"
+		"stop_id" : 211241,
+		"stop_name" : "CAMP CREEK MARKETPLACE"
 	},
 	{
 		"route_num" : "84",
@@ -572,8 +554,8 @@ var bus_terminus = [
 	{
 		"route_num" : "84",
 		"route_id" : 7681,
-		"stop_id" : 211241,
-		"stop_name" : "CAMP CREEK MARKETPLACE"
+		"stop_id" : 144118,
+		"stop_name" : "N CAMP CREEK PKWY"
 	},
 	{
 		"route_num" : "85",
@@ -584,14 +566,14 @@ var bus_terminus = [
 	{
 		"route_num" : "86",
 		"route_id" : 7683,
-		"stop_id" : 134052,
-		"stop_name" : "HILLANDALE @ EMBARCADERO"
+		"stop_id" : 134088,
+		"stop_name" : "MALL AT STONECREST"
 	},
 	{
 		"route_num" : "86",
 		"route_id" : 7683,
-		"stop_id" : 134088,
-		"stop_name" : "MALL AT STONECREST"
+		"stop_id" : 134052,
+		"stop_name" : "HILLANDALE @ EMBARCADERO"
 	},
 	{
 		"route_num" : "87",

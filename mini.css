@@ -8,34 +8,34 @@
 	src: url(fonts/SweetSansPro-Bold.otf);
 }
 
-body { margin: 0; font-family: "Sweet Sans Pro", "Source Sans Pro", "Montserrat", sans-serif;}
+body { margin: 0; font-family: "Sweet Sans Pro", "Source Sans Pro", "Montserrat", sans-serif; font-size:15pt;}
 
 #content-box-sizing,
 .header, .buses, .places, .bus, div.title {box-sizing: border-box;}
 
 #reduced-line-height,
-h2, th, .places, .disclaimer, .waypoints, .footer .cell, .stopid {line-height:90%;}
+h2, th, .places, .disclaimer, .waypoints, .footer .cell, .stopid {line-height:100%;}
 
 .mini-sign {
 	box-sizing: border-box;
 	float: left;
 	text-align: center;
-	width: 180px;
-	height: 240px;
+	width: 240px;
+	height: 320px;
 	border: 1px solid #BBBBBB;
 	line-height:100%;
 	position: relative;
-	padding-top:25px;
+	padding-top:0px;
 
 	background-image: url(img/timelytrip_mini2.png);
-	background-size: 180px 25px;
+	background-size: 220px 32px;
 	background-repeat: no-repeat;
 	background-position-y: 0%;
 
 }
 .mini-sign .QR-text {
 	clear: both;
-	font-size:80%;
+	font-size:75%;
 }
 .mini-sign img {
 	width: 75%;
@@ -50,10 +50,28 @@ h2, th, .places, .disclaimer, .waypoints, .footer .cell, .stopid {line-height:90
 	left: 0;
 	top: 65%;
 	position: absolute;
+	font-size:50%;
+	overflow: visible;
+	white-space: nowrap;
+}
+.mini-sign .stop-name {
+	background-color: #000000;
+	color: #FFFFFF;
+	font-size:60%;
+	height: 32px;
+	margin-left: 70px;
+	line-height:95%;
+	text-align:right;
+	padding:2px 2px 0 0;
+	box-sizing: border-box;
 }
 
 .buses { height: 56px;}
-.bus { border-bottom: 1px solid #B0B0B0; width:100%; overflow: hidden;}
+.bus { 
+	border-bottom: 1px solid #B0B0B0; 
+	width:100%; 
+	overflow: hidden;
+}
 .bus .title.route1 { background-color:#ffb3d1; } 
 .bus .title.route2 { background-color:#b3d9ff; } 
 .bus .title.route3 { background-color:#c2f0c2; } 
@@ -67,7 +85,7 @@ h2, th, .places, .disclaimer, .waypoints, .footer .cell, .stopid {line-height:90
 .bus .title.CCT { background-color: #cc66ff; }
 .bus .title.GCT { background-color: #c41013; }
 .bus .title.GRTA { background-color: #66cc99; }*/
-.bus .title .origin-destination { font-weight:bold; white-space: nowrap; width:100%;}
+.bus .title .origin-destination { font-weight:bold; white-space: nowrap; width:100%; text-align: left; font-size:90%;}
 .bus .title .waypoints { font-size:18px; padding-top:3px; display:none; }
 
 .bus table { border-collapse:collapse; }

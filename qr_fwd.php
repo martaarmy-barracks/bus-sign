@@ -36,7 +36,7 @@ if (isset($_REQUEST[$stopid_param]) && $_REQUEST[$stopid_param] != "") {
 	<body onload="setTimeout(function() {window.location.replace('<?=$targetUrl ?>');}, <?=$bannerDuration ?>);">
 		<h1><img src="img/timelytrip_black.jpg" alt="MARTA Army - Operation TimelyTrip" />
 		<br/>Thank you, and have a good trip!</h1>
-		<p>(<a href='$targetUrl'>Too slow?</a>)</p>
+		<p>(<a href='$targetUrl'>Click here if you are not automatically redirected within 5 seconds.</a>)</p>
 		<p><?=$errorMsg;?></p>
 <?php
 	$_DB->close();

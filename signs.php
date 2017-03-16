@@ -3,7 +3,10 @@
 include('busdata/busdata.php');
 
 date_default_timezone_set('America/New_York');
-$default_effective_date = "6-Aug-2016";
+$default_effective_date = "10-Dec-2016";
+$weekday_query_date = "2017-01-09";
+$saturday_query_date = "2017-01-14";
+$sunday_query_date = "2017-01-15";
 $color_index = 0;
 $oneBusAwayServerAndPort = "atlanta.onebusaway.org/api"; //"localhost:8080";
 
@@ -50,11 +53,14 @@ foreach($signsToMake as $sign) {
 }
 
 function pullDataForSign(&$sign) {
+	global $weekday_query_date;
+	global $saturday_query_date;
+	global $sunday_query_date;
 	global $oneBusAwayServerAndPort;
 
 	$sid = $sign->sid; // MARTA_1444545
 	
-	$result = getJson("http://" . $oneBusAwayServerAndPort . "/api/where/schedule-for-stop/" . $sid . ".json?key=TEST&date=2016-08-19"); // weekday
+	$result = getJson("http://" . $oneBusAwayServerAndPort . "/api/where/schedule-for-stop/" . $sid . ".json?key=TEST&date=" . $weekday_query_date); // weekday
 	
 	$sign->stopName = $result['data']['references']['stops'][0]['name'];
 	$sign->travelDirection = $result['data']['references']['stops'][0]['direction'];
@@ -69,11 +75,11 @@ function pullDataForSign(&$sign) {
 	createSchedules($result, $stopSchedules, $groupedSchedules, 'wkday');
 
 	// get saturday schedules
-	$result = getJson("http://" . $oneBusAwayServerAndPort . "/api/where/schedule-for-stop/" . $sid . ".json?key=TEST&date=2016-08-20"); // saturday
+	$result = getJson("http://" . $oneBusAwayServerAndPort . "/api/where/schedule-for-stop/" . $sid . ".json?key=TEST&date=" . $saturday_query_date); // saturday
 	createSchedules($result, $stopSchedules, $groupedSchedules, 'sat');
 	
 	// get sunday schedules
-	$result = getJson("http://" . $oneBusAwayServerAndPort . "/api/where/schedule-for-stop/" . $sid . ".json?key=TEST&date=2016-08-21"); // sunday
+	$result = getJson("http://" . $oneBusAwayServerAndPort . "/api/where/schedule-for-stop/" . $sid . ".json?key=TEST&date" . $sunday_query_date); // sunday
 	createSchedules($result, $stopSchedules, $groupedSchedules, 'sun');
 
 	// Above we marked certain headsigns as "AMBIGUOUS"
@@ -429,6 +435,9 @@ function printPageFooter($sign) {
 	$sid_loc = $sid_split[1];
 	$adopter = $sign->adopter;
 
+	global $default_effective_date;
+	$qrcode_url = "http://barracks.martaarmy.org/admin/bus-sign/qr_fwd.php%3Fs=$sid_full%26d=$default_effective_date";
+
 	echo <<<EOT
 	<div class='footer'>
 		<div class='disclaimer'>
@@ -443,7 +452,7 @@ function printPageFooter($sign) {
 			<img class="army_signup" src="img/army_signup.png" />
 		</div>
 		<div class="cell" style="float:right;width:32%;">
-			<img class='QR' src='qr.php?p=http://barracks.martaarmy.org/admin/bus-sign/qr_fwd.php?s=$sid_full'/>
+			<img class='QR' src='qr.php?p=$qrcode_url' title='$qrcode_url'/>
 			<div class='QR-text'><span class='big'><b>CHECK BUS STATUS &#x25BA;</b></span><br/>Scan here for real-time<br />arrivals on your phone.</div>
 		</div>			
 		<!--div class="bottom-hole">+</div-->

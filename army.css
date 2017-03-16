@@ -40,10 +40,12 @@ h2, th, .places, .disclaimer, .waypoints, .footer .cell, .stopid {line-height:90
 .bus .title.route1 { background-color:#ffb3d1; } 
 .bus .title.route2 { background-color:#b3d9ff; } 
 .bus .title.route3 { background-color:#c2f0c2; } 
+.bus .title.route4 { background-color:#f0b3ff; } 
 .bus .title h3 { font-size: 60px; margin: 0px 10px 0px 2px; padding:14px 8px 2px 8px; color: #FFFFFF; height:60%; float: left; background-color: #FFFFFF; border-radius:8px; min-width:0.8em; text-align:center; } 
 .bus .title h3.route1 { color:#ff0066; border-bottom: 8px solid #ff0066; } 
 .bus .title h3.route2 { color:#0066cc; border-bottom: 8px solid #0066cc; } 
 .bus .title h3.route3 { color:#29a329; border-bottom: 8px solid #29a329; } 
+.bus .title h3.route4 { color:#a300cc; border-bottom: 8px solid #a300cc; } 
 
 /*.bus .title.MARTA h3 {color: #00aeef; }*/
 /*.bus .title.MARTA { background-color: #00aeef; }

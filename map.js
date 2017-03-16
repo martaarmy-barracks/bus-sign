@@ -114,7 +114,8 @@ function drawMapForStopId(mapContainerId, agency, stopId, direction) {
 	}
 
 	function drawRoutesFromStop(stopid_str) {
-		routeids = BUSDATA[agency].stopid_to_routeids[stopid_str];
+		routeids = BUSDATA[agency].stopcode_to_routeids[stopid_str];
+        routeids.sort();
 		routeIdsDrawn = [];
         var routeWidth = 4;
         
@@ -284,7 +285,7 @@ function drawMapForStopId(mapContainerId, agency, stopId, direction) {
         for (var i = 0; i < RAIL_BUS.length; i++) {
             var rb = RAIL_BUS[i];
             if (rb.station == station_id) {
-                var busRouteIds = BUSDATA[agency].stopid_to_routeids[rb.stop];
+                var busRouteIds = BUSDATA[agency].stopcode_to_routeids[rb.stop];
                 if (busRouteIds != undefined) {
                     for (var j = 0; j < busRouteIds.length; j++) {
                         if (routeids.indexOf(busRouteIds[j]) > -1) {
