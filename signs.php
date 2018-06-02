@@ -1,14 +1,13 @@
 ﻿<?php
-
 include('busdata/busdata.php');
 
 date_default_timezone_set('America/New_York');
-$default_effective_date = "10-Dec-2016";
-$weekday_query_date = "2017-01-09";
-$saturday_query_date = "2017-01-14";
-$sunday_query_date = "2017-01-15";
+$default_effective_date = "9-Dec-2017";
+$weekday_query_date = "2017-12-11";
+$saturday_query_date = "2017-12-09";
+$sunday_query_date = "2017-12-10";
 $color_index = 0;
-$oneBusAwayServerAndPort = "atlanta.onebusaway.org/api"; //"localhost:8080";
+$oneBusAwayServerAndPort = "localhost:8080"; // "atlanta.onebusaway.org/api"; //"localhost:8080";
 
 $sids = $_REQUEST['sids'];
 $adopters = $_REQUEST['adopters'];
@@ -38,13 +37,63 @@ for($i=0; $i<1; $i++) {
     <script type="text/javascript" src="busdata/busdata.js"></script>
     <script type="text/javascript" src="busdata/rail_bus.js"></script>
     <script type="text/javascript" src="busdata/transit_stations.js"></script>
-    <script type="text/javascript" src="busdata/bus_terminus.js"></script>
+    <script type="text/javascript" src="busdata/terminus.js"></script>
+    <script type="text/javascript" src="busdata/routemarkers.js"></script>
     <script type="text/javascript" src="map.js"></script>
 
 	<title>MARTA Army | TimelyTrip</title>
 </head>
-<body>
+<body ng-app="MA_Signs">
+<div ng-controller="MapOptionsCtrl">
+	<button id="mapOptionsButton" ng-click="visible = true">Options</button>
+	<div id="mapOptionsContainer" ng-show="visible">
+		<div>Map Options <button ng-click="redraw()">Apply</button><button ng-click="visible = false">Close</button></div>
+		<div id="anchorEditor">
+			<div ng-repeat="arr in anchorVals">
+				<button ng-repeat="v in arr" ng-click="activeMarker.anchor = v">&nbsp;</button>
+			</div>
+		</div>
 
+		<table>
+			<thead>
+			<tr>
+				<th>Place</th>
+				<th>Lat</th>
+				<th>Lon</th>
+				<th>Marker</th>
+				<th>Anchor</th>
+				<th>Deg</th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr ng-click="setActiveMarker(mapSettings.youAreHere)">
+					<td>'You are here' Marker</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><input type="text" size="6" ng-model="mapSettings.youAreHere.anchor" /></td>
+					
+				</tr>
+				<tr ng-repeat="sta in stations | filter: {connecting: true}" ng-click="setActiveMarker(sta)">
+					<td><input type="text" ng-model="sta.name" /></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><input type="text" size="6" ng-model="sta.anchor" /></td>
+				</tr>
+				<tr ng-repeat="m in markers" ng-click="setActiveMarker(m)">
+					<td><input type="checkbox" ng-model="m.show" /><input type="text" ng-model="m.s" /></td>
+					<td><input type="text" size="6" ng-model="m.lat" /></td>
+					<td><input type="text" size="6" ng-model="m.lon" /></td>
+					<td><input type="checkbox" ng-model="m.dot" /></td>
+					<td><input type="text" size="6" ng-model="m.anchor" /></td>
+					<td><input type="text" size="2" ng-model="m.deg" /></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</div>
 <?php
 
 foreach($signsToMake as $sign) {
@@ -79,7 +128,7 @@ function pullDataForSign(&$sign) {
 	createSchedules($result, $stopSchedules, $groupedSchedules, 'sat');
 	
 	// get sunday schedules
-	$result = getJson("http://" . $oneBusAwayServerAndPort . "/api/where/schedule-for-stop/" . $sid . ".json?key=TEST&date" . $sunday_query_date); // sunday
+	$result = getJson("http://" . $oneBusAwayServerAndPort . "/api/where/schedule-for-stop/" . $sid . ".json?key=TEST&date=" . $sunday_query_date); // sunday
 	createSchedules($result, $stopSchedules, $groupedSchedules, 'sun');
 
 	// Above we marked certain headsigns as "AMBIGUOUS"
@@ -114,6 +163,7 @@ function pullDataForSign(&$sign) {
 
 	$sign->stopSchedules = $stopSchedules;
 	$sign->groupedSchedules = $groupedSchedules;
+
 }
 
 function getJson($url) {
@@ -228,8 +278,6 @@ function printPageForStop($sign) {
  
 
 	echo "<div class='page page12' id='page_$stopid'>";
-	//echo "<div class='top-hole'>+</div>";
-
 
 	printPageHeader($sign);
 
@@ -252,6 +300,7 @@ function printPageForStop($sign) {
 }
 
 function printPageHeader($sign) {
+
 	$sid = explode('_', $sign->sid)[1];
 	$stopName = $sign->stopName;
 	global $default_effective_date;
@@ -302,7 +351,7 @@ function printRouteInfo($routeInfo) {
 		<div class='places'>
 			$names
 			<div class='origin-destination'>$originDestination</div>
-			$waypoints
+			$waypoints <button class='busMoveUpButton'>Move up</button>
 		</div>
 	</div>
 EOT;
@@ -310,6 +359,8 @@ EOT;
 	$shouldPrintWeekday = (count($routeInfo['wkday']) > 0);
 	$shouldPrintSaturday = (count($routeInfo['sat']) > 0);
 	$shouldPrintSunday = (count($routeInfo['sun']) > 0);
+
+	// echo "Should print: Weekday: " . $shouldPrintWeekday . ", Saturday : " . $shouldPrintSaturday . ", Sunday: " . $shouldPrintSunday . " - END"; 
 
 	echo "		<table class='schedule'>";
 
@@ -436,7 +487,7 @@ function printPageFooter($sign) {
 	$adopter = $sign->adopter;
 
 	global $default_effective_date;
-	$qrcode_url = "http://barracks.martaarmy.org/admin/bus-sign/qr_fwd.php%3Fs=$sid_full%26d=$default_effective_date";
+	$qrcode_url = "http://barracks.martaarmy.org/qr.php%3Fs=$sid_full%26d=$default_effective_date";
 
 	echo <<<EOT
 	<div class='footer'>
@@ -463,29 +514,81 @@ EOT;
 
 ?>
 
+<script type="text/javascript" src="../../jslib/angular.min.js"></script>
+<script type="text/javascript" src="signs-options.js"></script>
 <script type='text/javascript'>
+
+var timetabledata = undefined;
+
 $(document).ready( function() {
 	
 	$('.page').each(function() {
 		adjustBoxes($(this));
+		performLayout();
 	});
 	
 	$('.waypoints').css("display", "inherit");
 	$('.schedule').css("width", "100%");
 	
+	$('.busMoveUpButton').click(function() {
+		$(this).parent().parent().parent().addClass('move-up');
+		performLayout();
+	});
+
 	drawMaps();
-
-	//setTimeout(function(){ captureMaps(); }, 15000);
-
 });
+
+
+function performLayout() {
+	var containerWidth = 1100 - 2;
+	$('.buses div.bus.move-up').each(function() {
+		var elementToMove = $(this);				
+		elementToMove.detach();
+				
+		$('.map-container').width('49%');				
+				
+		elementToMove.appendTo($('.mapFold'));
+		elementToMove.width(containerWidth / 2 * 0.985);
+		elementToMove.css("float", "right");
+	});
+
+	var bottomRowElements = $('.buses div.bus');
+	var totalWidth = 0;
+	var nElementsInRow = 0;
+	bottomRowElements.each(function() {
+		totalWidth += $(this).width();
+		nElementsInRow++;
+	});
+
+	var idealBusWidth = containerWidth;
+	if (nElementsInRow > 1) idealBusWidth = containerWidth / nElementsInRow;		
+	var stretchRatio = containerWidth / totalWidth;
+
+	var allBusWidthsAreLessThanIdeal = true;
+	bottomRowElements.each(function() {
+		if ($(this).width() > idealBusWidth) allBusWidthsAreLessThanIdeal = false;
+	});
+	
+	bottomRowElements.each(function(i, e) {
+		var new_w = idealBusWidth;
+		
+		if (!allBusWidthsAreLessThanIdeal) new_w = $(this).width() * stretchRatio;
+		if (nElementsInRow == 1) new_w *= 0.998;
+		if (nElementsInRow >= 2) new_w *= 0.985;
+		
+		$(this).width(new_w);
+		
+		if (nElementsInRow > 1 && i == nElementsInRow - 1) {
+			$(this).css("float", "right");
+		}
+	});
+}
 
 function collectBusElementRows(element) {
 	var totalWidth = 0;
 	var result = {allItems: [], rows: []};
 	var nLineReturns = 0;
 	var prevItem = undefined;
-
-	//$('.buses div.bus').each(function() {
 
 	element.find('.buses div.bus').each(function() {
 		var $b = $(this);		
@@ -518,22 +621,13 @@ function collectBusElementRows(element) {
 
 function adjustBoxes(element) {
 	var containerWidth = 1100 - 2;
-	var containerHeight = 1700;
+	var containerHeight = 1697;
 	var busRowData = collectBusElementRows(element);
 
  	var stopid = element[0].id;
  	var stopid_split = stopid.split("_");
 	var agency = stopid_split[1];
 	var stopid_str = stopid_split[2];
- 	//var routeids = BUSDATA[agency].stopid_to_routeids[stopid_str];
-
-	//if (routeids != undefined) {
-	//	for (var i = 0; i < routeids.length; i++) {
-	//		var routeid_only = routeids[i].split("_")[0];
-	//		element.find('.routeid_' + routeid_only).addClass('route' + (i + 1));
-	//		element.find('.routeid_' + routeid_only).parent().parent().addClass('route' + (i + 1));
-	//	}
-	//}
 
 	// Coloring without relying on BUSDATA.
 	element.find("h3").each(function(index) {
@@ -555,7 +649,7 @@ function adjustBoxes(element) {
 
 
 	// OPTION2 Two rows: remove the local map and place a schedule that is within width next to map.
-	if (busRowData.rows.length >= 2) {
+/*	if (busRowData.rows.length >= 2) {
 		var elementToMove = undefined;
 		for (var k = 0; k < busRowData.allItems.length - 1; k++) {
 			if (busRowData.allItems[k].element.width() < (containerWidth / 2)) {
@@ -574,7 +668,7 @@ function adjustBoxes(element) {
 			}
 		}
 	}
-
+*/
 	
 	// Switch to 50% split if there is only one row.
 	if (busRowData.rows.length == 1) {
@@ -638,25 +732,14 @@ function adjustBoxes(element) {
 
 function drawMaps() {
 	$('.map-container').each(function(i,el) {
-		var w0 = $(el).width();
-		var h0 = $(el).height();
-		
-		//$(el).height('200%');
-		//$(el).width('200%');
+		$(el).children().remove();
 
 		var mapid = $(el).attr('id');
 		var mapid_parts = mapid.split('_');
 		var agency = mapid_parts[1];
 		var stopid = mapid_parts[2];
         var direction = mapid_parts[3];
-		drawMapForStopId(mapid, agency, stopid, direction);		
-		
-		//$(el).height(h0);
-		//$(el).width(w0);
-		
-		//var canvas = $(el).find('.mapboxgl-canvas');
-		//canvas.css("width", w0);
-		//canvas.css("height", h0);
+		drawMapForStopId(mapid, agency, stopid, direction);
 	});
 }
 

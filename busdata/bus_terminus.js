@@ -2,7 +2,7 @@ var bus_terminus = [
 	{
 		"route_num" : "1",
 		"route_id" : 7634,
-		"stop_id" : 900381,
+		"stop_id" : 900349,
 		"stop_name" : "MOORES MILL SHOP CTR"
 	},
 	{
@@ -56,8 +56,8 @@ var bus_terminus = [
 	{
 		"route_num" : "12",
 		"route_id" : 7642,
-		"stop_id" : 905521,
-		"stop_name" : "PACES PAVILION"
+		"stop_id" : 905752,
+		"stop_name" : "NORTH ATLANTA HIGH SCHOOL"
 	},
 	{
 		"route_num" : "12",
@@ -68,26 +68,20 @@ var bus_terminus = [
 	{
 		"route_num" : "120",
 		"route_id" : 7701,
-		"stop_id" : 902115,
-		"stop_name" : "TUCKER @ GREER CIR"
-	},
-	{
-		"route_num" : "120",
-		"route_id" : 7701,
-		"stop_id" : 902222,
-		"stop_name" : "TUCKER @ GREER CIR"
+		"stop_id" : 211190,
+		"stop_name" : "E ANDREWS HS"
 	},
 	{
 		"route_num" : "121",
 		"route_id" : 7702,
 		"stop_id" : 211503,
-		"stop_name" : "LAUREN PKWY"
+		"stop_name" : "MEMORIAL DR @ 5855"
 	},
 	{
 		"route_num" : "121",
 		"route_id" : 7702,
-		"stop_id" : 211482,
-		"stop_name" : "GOLDSMITH PARK & RIDE"
+		"stop_id" : 213121,
+		"stop_name" : "N ROYAL ATLANTA DR"
 	},
 	{
 		"route_num" : "123",
@@ -158,13 +152,13 @@ var bus_terminus = [
 	{
 		"route_num" : "150",
 		"route_id" : 7712,
-		"stop_id" : 902866,
+		"stop_id" : 902690,
 		"stop_name" : "DUNWOODY VILLAGE"
 	},
 	{
 		"route_num" : "150",
 		"route_id" : 7712,
-		"stop_id" : 902690,
+		"stop_id" : 902866,
 		"stop_name" : "DUNWOODY CLUB"
 	},
 	{
@@ -182,26 +176,26 @@ var bus_terminus = [
 	{
 		"route_num" : "162",
 		"route_id" : 7715,
-		"stop_id" : 144118,
+		"stop_id" : 146382,
 		"stop_name" : "N CAMP CREEK PKWY"
 	},
 	{
 		"route_num" : "165",
 		"route_id" : 7716,
-		"stop_id" : 144950,
-		"stop_name" : "BARGE RD PARK & RIDE"
-	},
-	{
-		"route_num" : "170",
-		"route_id" : 7717,
-		"stop_id" : 900827,
-		"stop_name" : "BENJAMIN E MAYS DR"
+		"stop_id" : 120024,
+		"stop_name" : "ASHLEY CASCADE APTS"
 	},
 	{
 		"route_num" : "178",
 		"route_id" : 7719,
 		"stop_id" : 159344,
 		"stop_name" : "SOUTHSIDE INDUSTRIAL"
+	},
+	{
+		"route_num" : "178",
+		"route_id" : 7719,
+		"stop_id" : 159282,
+		"stop_name" : "CLEVELAND @ BROWNS MILL"
 	},
 	{
 		"route_num" : "180",
@@ -228,22 +222,10 @@ var bus_terminus = [
 		"stop_name" : "FAIRBURN"
 	},
 	{
-		"route_num" : "183",
-		"route_id" : 7722,
-		"stop_id" : 144950,
-		"stop_name" : "BARGE RD PARK & RIDE"
-	},
-	{
 		"route_num" : "185",
 		"route_id" : 7723,
-		"stop_id" : 903085,
-		"stop_name" : "BROOKSIDE PKWY"
-	},
-	{
-		"route_num" : "186",
-		"route_id" : 7724,
-		"stop_id" : 211627,
-		"stop_name" : "PRYOR ST SE @ WALL ST SE"
+		"stop_id" : 903219,
+		"stop_name" : "GSU BROOKSIDE PKWY"
 	},
 	{
 		"route_num" : "186",
@@ -272,12 +254,6 @@ var bus_terminus = [
 	{
 		"route_num" : "192",
 		"route_id" : 7727,
-		"stop_id" : 212540,
-		"stop_name" : "OLD DIXIE RD @ FOREST PKWY"
-	},
-	{
-		"route_num" : "192",
-		"route_id" : 7727,
 		"stop_id" : 212236,
 		"stop_name" : "CLAYTON COUNTY JUSTICE CENTER"
 	},
@@ -290,14 +266,14 @@ var bus_terminus = [
 	{
 		"route_num" : "194",
 		"route_id" : 7729,
-		"stop_id" : 212236,
-		"stop_name" : "CLAYTON COUNTY JUSTICE CENTER"
+		"stop_id" : 212168,
+		"stop_name" : "SOUTHLAKE MALL"
 	},
 	{
 		"route_num" : "195",
 		"route_id" : 7730,
-		"stop_id" : 212193,
-		"stop_name" : "ANVIL BLOCK LUNSFORD DR"
+		"stop_id" : 213118,
+		"stop_name" : "S PARK BLVD"
 	},
 	{
 		"route_num" : "196",
@@ -315,7 +291,7 @@ var bus_terminus = [
 		"route_num" : "201",
 		"route_id" : 7732,
 		"stop_id" : 555300,
-		"stop_name" : "SIX FLAGS PKY@SERVICE RD"
+		"stop_name" : "SIX FLAGS"
 	},
 	{
 		"route_num" : "21",
@@ -326,8 +302,8 @@ var bus_terminus = [
 	{
 		"route_num" : "221",
 		"route_id" : 7733,
-		"stop_id" : 211482,
-		"stop_name" : "GOLDSMITH PARK & RIDE"
+		"stop_id" : 901845,
+		"stop_name" : "JULIETTE RD"
 	},
 	{
 		"route_num" : "26",
@@ -339,7 +315,8 @@ var bus_terminus = [
 		"route_num" : "3",
 		"route_id" : 7636,
 		"stop_id" : 901227,
-		"stop_name" : "H MILLS CENTER"
+		"stop_name" : "H MILLS CENTER",
+		anchor: "left"
 	},
 	{
 		"route_num" : "30",
@@ -360,15 +337,9 @@ var bus_terminus = [
 		"stop_name" : "GSU DECATUR"
 	},
 	{
-		"route_num" : "34",
-		"route_id" : 7655,
-		"stop_id" : 153008,
-		"stop_name" : "CLIFTON SPRINGS HEALTH CTR"
-	},
-	{
 		"route_num" : "37",
 		"route_id" : 7657,
-		"stop_id" : 900375,
+		"stop_id" : 900349,
 		"stop_name" : "MOORES MILL SHOP CTR"
 	},
 	{
@@ -386,20 +357,14 @@ var bus_terminus = [
 	{
 		"route_num" : "50",
 		"route_id" : 7662,
-		"stop_id" : 903509,
-		"stop_name" : "CROFT PL"
-	},
-	{
-		"route_num" : "50",
-		"route_id" : 7662,
 		"stop_id" : 903825,
 		"stop_name" : "FULTON INDUS OLD GORDON RD"
 	},
 	{
-		"route_num" : "51",
-		"route_id" : 7663,
-		"stop_id" : 904053,
-		"stop_name" : "NEW JERSEY AVE"
+		"route_num" : "50",
+		"route_id" : 7662,
+		"stop_id" : 903509,
+		"stop_name" : "CROFT PL"
 	},
 	{
 		"route_num" : "53",
@@ -414,16 +379,22 @@ var bus_terminus = [
 		"stop_name" : "FOREST PKWY"
 	},
 	{
-		"route_num" : "56",
-		"route_id" : 7666,
-		"stop_id" : 900754,
-		"stop_name" : "PLAINVILLE CIR"
+		"route_num" : "55",
+		"route_id" : 7665,
+		"stop_id" : 212057,
+		"stop_name" : "S ATLANTA HIGH SCHOOL"
 	},
 	{
 		"route_num" : "56",
 		"route_id" : 7666,
-		"stop_id" : 901079,
-		"stop_name" : "DOLLAR MILL RD"
+		"stop_id" : 900957,
+		"stop_name" : "ALEX DR"
+	},
+	{
+		"route_num" : "56",
+		"route_id" : 7666,
+		"stop_id" : 903967,
+		"stop_name" : "BAKERS FERRY @ CORNELL"
 	},
 	{
 		"route_num" : "58",
@@ -446,20 +417,20 @@ var bus_terminus = [
 	{
 		"route_num" : "66",
 		"route_id" : 7669,
-		"stop_id" : 144950,
-		"stop_name" : "BARGE RD PARK & RIDE"
+		"stop_id" : 210843,
+		"stop_name" : "BENJAMIN E MAYS HS"
+	},
+	{
+		"route_num" : "66",
+		"route_id" : 7669,
+		"stop_id" : 145075,
+		"stop_name" : "N CAMP CREEK"
 	},
 	{
 		"route_num" : "68",
 		"route_id" : 7671,
-		"stop_id" : 900195,
-		"stop_name" : "GORDON ST @ ALVARADO"
-	},
-	{
-		"route_num" : "68",
-		"route_id" : 7671,
-		"stop_id" : 122316,
-		"stop_name" : "BENJAMIN E MAYS DR"
+		"stop_id" : 210843,
+		"stop_name" : "BENJAMIN E MAYS HIGH SCHOOL"
 	},
 	{
 		"route_num" : "71",
@@ -468,10 +439,10 @@ var bus_terminus = [
 		"stop_name" : "COUNTRY SQUIRE"
 	},
 	{
-		"route_num" : "71",
-		"route_id" : 7672,
-		"stop_id" : 120024,
-		"stop_name" : "ASHLEY COURT"
+		"route_num" : "73",
+		"route_id" : 7673,
+		"stop_id" : 901290,
+		"stop_name" : "BOAT ROCK BLVD"
 	},
 	{
 		"route_num" : "73",
@@ -480,22 +451,16 @@ var bus_terminus = [
 		"stop_name" : "WEST PARK PL"
 	},
 	{
-		"route_num" : "73",
-		"route_id" : 7673,
-		"stop_id" : 901290,
-		"stop_name" : "BOAT ROCK BLVD"
+		"route_num" : "74",
+		"route_id" : 7674,
+		"stop_id" : 212219,
+		"stop_name" : "S DEKALB MALL"
 	},
 	{
 		"route_num" : "74",
 		"route_id" : 7674,
 		"stop_id" : 211627,
 		"stop_name" : "PRYOR ST SE @ WALL ST SE"
-	},
-	{
-		"route_num" : "74",
-		"route_id" : 7674,
-		"stop_id" : 212219,
-		"stop_name" : "S DEKALB MALL"
 	},
 	{
 		"route_num" : "75",
@@ -518,20 +483,20 @@ var bus_terminus = [
 	{
 		"route_num" : "81",
 		"route_id" : 7678,
-		"stop_id" : 122200,
-		"stop_name" : "ADAMS PARK"
+		"stop_id" : 122062,
+		"stop_name" : "MYRTLE DR"
+	},
+	{
+		"route_num" : "82",
+		"route_id" : 7679,
+		"stop_id" : 164002,
+		"stop_name" : "CAMP CREEK"
 	},
 	{
 		"route_num" : "82",
 		"route_id" : 7679,
 		"stop_id" : 182029,
 		"stop_name" : "S FULTON SVC CTR"
-	},
-	{
-		"route_num" : "82",
-		"route_id" : 7679,
-		"stop_id" : 211241,
-		"stop_name" : "CAMP CREEK MARKETPLACE"
 	},
 	{
 		"route_num" : "83",
@@ -542,20 +507,8 @@ var bus_terminus = [
 	{
 		"route_num" : "84",
 		"route_id" : 7681,
-		"stop_id" : 211241,
-		"stop_name" : "CAMP CREEK MARKETPLACE"
-	},
-	{
-		"route_num" : "84",
-		"route_id" : 7681,
 		"stop_id" : 164002,
-		"stop_name" : "CENTRE PKWY"
-	},
-	{
-		"route_num" : "84",
-		"route_id" : 7681,
-		"stop_id" : 144118,
-		"stop_name" : "N CAMP CREEK PKWY"
+		"stop_name" : "CAMP CREEK"
 	},
 	{
 		"route_num" : "85",
@@ -566,14 +519,14 @@ var bus_terminus = [
 	{
 		"route_num" : "86",
 		"route_id" : 7683,
-		"stop_id" : 134088,
-		"stop_name" : "MALL AT STONECREST"
+		"stop_id" : 134052,
+		"stop_name" : "HILLANDALE @ EMBARCADERO"
 	},
 	{
 		"route_num" : "86",
 		"route_id" : 7683,
-		"stop_id" : 134052,
-		"stop_name" : "HILLANDALE @ EMBARCADERO"
+		"stop_id" : 134088,
+		"stop_name" : "MALL AT STONECREST"
 	},
 	{
 		"route_num" : "87",
@@ -596,8 +549,14 @@ var bus_terminus = [
 	{
 		"route_num" : "93",
 		"route_id" : 7686,
-		"stop_id" : 146288,
-		"stop_name" : "DORSEY AVE @ LUTHER DR"
+		"stop_id" : 164002,
+		"stop_name" : "CAMP CREEK"
+	},
+	{
+		"route_num" : "94",
+		"route_id" : 7735,
+		"stop_id" : 213086,
+		"stop_name" : "DISTRICT @ HOWELL MILL"
 	},
 	{
 		"route_num" : "95",

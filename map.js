@@ -1,4 +1,13 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoianJoYXJzaGF0aCIsImEiOiJLQ19oQ0lnIn0.WOJhLVoEGELi8cW93XIS1Q';
+var mapSettings = {youAreHere: {anchor: 'left'}};
+
+function forEach(arr, callback) {
+    if (arr != undefined) {
+        for (var i = 0; i < arr.length; i++) {
+            callback(arr[i]);
+        }    
+    }
+}
 
 function drawMapForStopId(mapContainerId, agency, stopId, direction) {
 	
@@ -9,21 +18,25 @@ function drawMapForStopId(mapContainerId, agency, stopId, direction) {
 		attributionControl : false,
         interactive: false,
 	    zoom: 12 // starting zoom
-	});
-
+    });
+    
 	var allPoints = [];
 	var routeids = [];
 
 	map.on('style.load', function () {
         drawRailLines();
 
+        routeids = BUSDATA[agency].stopcode_to_routeids[stopId];
+        routeids.sort();
+
+        drawStations();
+        
         allPoints = [];
 		drawRoutesFromStop(stopId);
 
 		var bounds = findBounds(allPoints);
 		map.fitBounds(bounds);
 
-        drawStations();
 		drawStop(stopId);
 	});
 
@@ -42,19 +55,26 @@ function drawMapForStopId(mapContainerId, agency, stopId, direction) {
         var stationCoords = [];
         var stationFeatures = [];
         var connectingStationFeatures = [];
+        var connectingStations = [];
         
-        for (var i = 0; i < transit_stations.length; i++) {
-            var stopid_str = transit_stations[i].id;
-            var stationName = transit_stations[i].name;
+        forEach(transit_stations, function(sta) {
+            var stopid_str = sta.id;
+            var stationName = sta.name;
             
             var s = BUSDATA[agency].stop_data[stopid_str];
             var busRoutes = getBusRoutesAtStation(stopid_str);
             var hasConnectingBuses = busRoutes.length != 0;
-            if (hasConnectingBuses) stationName = stationName.toUpperCase();
+            sta.connecting = hasConnectingBuses;
+            if (hasConnectingBuses) {
+                stationName = stationName.toUpperCase();
+                connectingStations.push(sta);
+            }
+            
+            allPoints.push([s.lng, s.lat]);
 
-            //allPoints.push([s.lng, s.lat]);
-
-            stationCoords.push([s.lng, s.lat]);            
+            stationCoords.push([s.lng, s.lat]);       
+            sta.coords = [s.lng, s.lat];
+            
             (hasConnectingBuses ? connectingStationFeatures : stationFeatures).push({
                     "type": "Feature",
                     "geometry": {
@@ -62,10 +82,11 @@ function drawMapForStopId(mapContainerId, agency, stopId, direction) {
                         "coordinates": [s.lng, s.lat]
                     },
                     "properties": {
-                        "title": stationName
+                        "title": stationName //,
+                        //"offset" : offset
                     }
             });
-        }
+        });
         
         var globalStationLocs = 'global-station-location';
         var globalSourceName = 'global-stations';
@@ -91,9 +112,29 @@ function drawMapForStopId(mapContainerId, agency, stopId, direction) {
             }
         });
 
-        drawStationLocLayer(globalStationLocs, 6);
-        drawStationTextLayer(globalSourceName, 12, "#000000", undefined);
-        drawStationTextLayer(globalConnSourceName, 18, "#FFFFFF", "#000066");
+        drawStationLocLayer(globalStationLocs, 7);
+        drawStationTextLayer(globalSourceName, 12, "#666666", undefined);
+        drawMarkerTextLayer(globalConnSourceName, connectingStations, 18, 1, "#FFFFFF", "#000066");
+    }
+
+    function getOffset(anchor, length) {
+        var offx = 0;
+        var offy = 0;
+
+        var textalign = "center";
+        if (anchor.indexOf("right") > -1) {
+            offx = -length * 2;
+        } 
+        if (anchor.indexOf("left") > -1) {
+            offx = length;
+        } 
+        if (anchor.indexOf("top") > -1) {
+            offy = length;
+        } 
+        if (anchor.indexOf("bottom") > -1) {
+            offy = -length;
+        }        
+        return [offx, offy];
     }
 
 	function findBounds(allPoints) {
@@ -114,28 +155,65 @@ function drawMapForStopId(mapContainerId, agency, stopId, direction) {
 	}
 
 	function drawRoutesFromStop(stopid_str) {
-		routeids = BUSDATA[agency].stopcode_to_routeids[stopid_str];
-        routeids.sort();
-		routeIdsDrawn = [];
+		var routeIdsDrawn = [];
         var routeWidth = 4;
-        
-		for(var i=0; i<routeids.length; i++) {
+
+        for(var i=0; i < routeids.length; i++) {
             if (routeIdsDrawn.indexOf(routeids[i]) < 0) {
                 routeIdsDrawn.push(routeids[i]);
-                drawRoute(routeids[i], RouteColors[i], routeWidth, false); // todo replace with freq
+            }
+        }
+        var actualRouteCount = routeIdsDrawn.length;
+		routeIdsDrawn = [];
+        
+        var offx = 0;
+        var offy = 0;
+        var dx = 0;
+        var dy = 0;
+        if (routeids.length > 1) {
+            switch(direction) {
+                case "E":
+                case "W":
+                    dy = -routeWidth / 2 * (actualRouteCount - 1);
+                    offy = routeWidth; break;
+                case "N":
+                case "S":
+                    dx = -routeWidth / 2 * (actualRouteCount - 1);
+                    offx = routeWidth; break;
+                case "NE":
+                case "SW": 
+                    dx = dy = -routeWidth/1.3 * (actualRouteCount - 1);
+                    offx = offy = routeWidth/1.3; break;
+                case "NW":
+                case "SE":
+                    dx = routeWidth/1.3 * (actualRouteCount - 1);
+                    offx = -routeWidth/1.3; break;
+                    dy = -routeWidth/1.3 * (actualRouteCount - 1);
+                    offy = routeWidth/1.3; break;
+                };    
+        }
+        
+		for(var i=0; i < routeids.length; i++) {
+            if (routeIdsDrawn.indexOf(routeids[i]) < 0) {
+                routeIdsDrawn.push(routeids[i]);
+                drawRoute(routeids[i], RouteColors[i], routeWidth, false, dx, dy); // todo replace with freq
                 
 			    var suffix = routeids[i].substr(-2, 2);
                 var otherLeg1 = routeids[i].replace("_0", "_1");
                 var otherLeg2 = routeids[i].replace("_1", "_0");
                 if (suffix == "_0" && routeIdsDrawn.indexOf(otherLeg1) < 0) {
                     routeIdsDrawn.push(otherLeg1);
-                    drawRoute(otherLeg1, RouteColors[i], routeWidth, false); // todo replace with freq
+                    drawRoute(otherLeg1, RouteColors[i], routeWidth, false, dx, dy); // todo replace with freq
                 }
                 if (suffix == "_1" && routeIdsDrawn.indexOf(otherLeg2) < 0) {
                     routeIdsDrawn.push(otherLeg2);
-                    drawRoute(otherLeg2, RouteColors[i], routeWidth, false); // todo replace with freq
+                    drawRoute(otherLeg2, RouteColors[i], routeWidth, false, dx, dy); // todo replace with freq
                 }
-                drawRouteName(routeids[i], RouteColors[i]);            }
+                drawRouteName(routeids[i], RouteColors[i]);
+
+                dx += offx;
+                dy += offy;
+            }
 		}
         
         drawNonStationTerminus(routeids);
@@ -172,8 +250,8 @@ function drawMapForStopId(mapContainerId, agency, stopId, direction) {
 	        "layout": {
 	            "text-field": "You are here",
 	            "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-	            "text-offset": [1, 0],
-	            "text-anchor": "left"
+	            "text-offset": getOffset(mapSettings.youAreHere.anchor, 1.0),
+	            "text-anchor": mapSettings.youAreHere.anchor
 	        },
 	        "paint": {
 	            "text-size": 10,
@@ -214,39 +292,46 @@ function drawMapForStopId(mapContainerId, agency, stopId, direction) {
         }
 	}
 
-	function drawRoute(routeid, routecolor, weight, drawname) {
+	function drawRoute(routeid, routecolor, weight, drawname, dx, dy) {
 		if(drawname===undefined) drawname = true;
 
 		var shapeids = BUSDATA[agency].routeid_to_shapeids[routeid];
 
-		for(shapeid in shapeids) {
-			drawShape(shapeid, routecolor, weight);
+        drawRouteMarkers(routeid);
+
+        for(shapeid in shapeids) {
+			drawShape(shapeid, routecolor, weight, dx, dy);
 		}
 
-		if(drawname) { drawRouteName(routeid, routecolor); }
+        if(drawname) { drawRouteName(routeid, routecolor); }
 	}
     
     function drawNonStationTerminus(routeids) {
         var stopids = [];
-        for (var k = 0; k < routeids.length; k++) {
-            var rawRouteId = routeids[k].split("_")[0];
-            for (var i = 0; i < bus_terminus.length; i++) {
-                if (bus_terminus[i].route_id == rawRouteId) {
-                    var stopid = bus_terminus[i].stop_id;
-                    var isStation = false;
-                    for (var j = 0; j < RAIL_BUS.length; j++) {
-                        if (RAIL_BUS[j].stop == stopid) {
-                            isStation = true;
-                            break;
+
+        forEach(routeids, function(r) {
+            var rawRouteId = r.split("_")[0];
+            forEach(bus_terminus, function(terms) {
+                if (terms.route_id == rawRouteId) {
+                    forEach(terms.terminii, function(term) {
+                        var stopid = term.stop_id;
+                        var isStation = false;
+                        for (var k = 0; k < RAIL_BUS.length; k++) {
+                            if (RAIL_BUS[k].stop == stopid) {
+                                isStation = true;
+                                break;
+                            }
                         }
-                    }
-                    
-                    if (!isStation) {
-                        stopids.push({stopid: stopid, name: bus_terminus[i].stop_name});
-                    }
+
+                        if (!isStation) {
+                            stopids.push({stopid: term.stop_id, name: term.stop_name, srcData: term});
+                            term.connecting = true;
+                            term.name = term.stop_name;
+                        }
+                    });
                 }    
-            }            
-        }
+            });
+        });
         
         var terminusFeatures = [];
         for (var k = 0; k < stopids.length; k++) {
@@ -254,6 +339,7 @@ function drawMapForStopId(mapContainerId, agency, stopId, direction) {
             var s = BUSDATA[agency].stop_data[stopid_str];
 
             allPoints.push([s.lng, s.lat]);
+            stopids[k].srcData.coords = [s.lng, s.lat]
             
             terminusFeatures.push({
                     "type": "Feature",
@@ -277,7 +363,42 @@ function drawMapForStopId(mapContainerId, agency, stopId, direction) {
         });
 
         drawStationLocLayer(sourcename, 4);
-        drawStationTextLayer(sourcename, 16, "#FFFFFF", "#000000");
+        //drawStationTextLayer(sourcename, 16, "#FFFFFF", "#000000");
+
+        var textSize = 16;
+        var textColor = "#FFFFFF";
+        var backColor = "#000000";
+        for (var i = 0; i < stopids.length; i++) {
+            var sta = stopids[i].srcData;
+            var anchor = sta.anchor;
+            if (anchor == undefined) anchor = "bottom-left";
+            
+            var stationSrcName = 'terminus_src_' + i;
+            map.addSource(stationSrcName, new mapboxgl.GeoJSONSource({
+                data: { type: "Point", coordinates: sta.coords }
+            }));
+                
+            map.addLayer({
+                "id": 'terminus_' + i,
+                "type": "symbol",
+                "source": stationSrcName,
+                "layout": {
+                    "text-field": sta.name,
+                    "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+                    "text-offset": getOffset(anchor, 0.75),
+                    "text-size" : textSize,
+                    "text-transform" : "uppercase",
+                    "text-anchor": anchor,
+                    //"text-justify": textalign,
+                    "text-line-height" : 0.8
+                },
+                "paint": {
+                    "text-color": textColor,
+                    "text-halo-color": (backColor == undefined ? "#FFFFFF" : backColor),
+                    "text-halo-width": (backColor == undefined ? 1 : 5)
+                }
+            });    
+        }        
     }
 
     function getBusRoutesAtStation(station_id) {
@@ -298,7 +419,7 @@ function drawMapForStopId(mapContainerId, agency, stopId, direction) {
         return result;
     }
 
-	function drawShape(shapeid, color, weight) {
+	function drawShape(shapeid, color, weight, dx, dy) {
 		var points = BUSDATA[agency].shapeid_to_shapecoords[shapeid];
 		var points_arr = [];
 
@@ -331,7 +452,8 @@ function drawMapForStopId(mapContainerId, agency, stopId, direction) {
                 },
                 "paint": {
                     "line-color": color,
-                    "line-width": weight
+                    "line-width": weight,
+                    "line-translate": [dx, dy]
                 }
             });
 
@@ -353,9 +475,22 @@ function drawMapForStopId(mapContainerId, agency, stopId, direction) {
 			if(shapeidcount > maxcount) { mostfreqshapeid = shapeid; }
 		}
 
-		var shape = BUSDATA[agency].shapeid_to_shapecoords[mostfreqshapeid];
-		var midpt = shape[Math.floor(shape.length/2)];
-		midpt = [midpt.lng, midpt.lat];
+        var shape = BUSDATA[agency].shapeid_to_shapecoords[mostfreqshapeid];
+        
+        var midpt = undefined;
+        // get preferred route label location if any.
+        for (var i = 0; i < preferredRouteNumberLocations.length; i++) {
+            var loc = preferredRouteNumberLocations[i];
+            if (loc.r == routename) {
+                midpt = [loc.lon, loc.lat];
+                break;
+            }
+        }
+        
+        if (midpt == undefined) {
+            var midpt = shape[Math.floor(shape.length/2)];
+            midpt = [midpt.lng, midpt.lat];    
+        }
 		allPoints.push(midpt);
 
   		var sourcename = 'routename-'+routeid;
@@ -382,7 +517,72 @@ function drawMapForStopId(mapContainerId, agency, stopId, direction) {
 	        }
 	    });
 	}
+
+    function drawRouteMarkers(routeid) {
+		var routeid_parts = routeid.split('_');
+		var routeid_without_direction = routeid_parts.slice(0,routeid_parts.length-1).join('_');
+
+        var routename = BUSDATA[agency].route_data[routeid_without_direction].shortname;
+        
+        for (var i = 0; i < routemarkers.length; i++) {
+            var m = routemarkers[i];
+            if (m.show) {
+                var appliesToRoute = false;
+                for (var j = 0; j < m.r.length; j++) {
+                    if (m.r[j] == routename) {
+                        appliesToRoute = true;
+                        break;
+                    } 
+                }
     
+                if (appliesToRoute) {
+                    var sourcename = 'routemarker-' + routeid + '-' + i;
+                    var pt = [m.lon, m.lat];
+            
+                    var anchor = m.anchor;
+                    if (anchor == undefined) anchor = "bottom-left";
+                    
+                    var textalign = "center";
+
+                    map.addSource(sourcename, new mapboxgl.GeoJSONSource({
+                      data: { "type": "Point", "coordinates": pt }
+                    }));
+                    
+                    map.addLayer({
+                        "id": sourcename,
+                        "type": "symbol",
+                        "source": sourcename,
+                        "layout": {
+                            "text-field": m.s,
+                            "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+                            "text-size": 14,
+                            "text-anchor": anchor, //"center",
+                            "text-offset": getOffset(anchor, 0.5),
+                            "text-rotate" : m.deg
+                        },
+                        "paint": {
+                            "text-color": '#000000',
+                            "text-halo-color": '#ffffff',
+                            "text-halo-width": 8,
+                        }
+                    });
+                    if (m.dot == true) {
+                        map.addLayer({
+                            "id": sourcename + '_circle',
+                            "type": "circle",
+                            "source": sourcename,
+                            "paint": {
+                                "circle-radius": 4,
+                                "circle-color": "#444",
+                                "circle-opacity": 1
+                            }
+                        });    
+                    }
+                }    
+            }
+        }
+	}
+
     function drawStationTextLayer(srcId, textSize, textColor, backColor) {
         map.addLayer({
             "id": srcId + '_text',
@@ -403,6 +603,41 @@ function drawMapForStopId(mapContainerId, agency, stopId, direction) {
             }
         });
     }
+
+    function drawMarkerTextLayer(srcId, srcData, textSize, anchorDist, textColor, backColor) {
+        for (var i = 0; i < srcData.length; i++) {
+            var sta = srcData[i];
+            var anchor = sta.anchor;
+            if (anchor == undefined) anchor = "bottom-left";
+            
+
+            var stationSrcName = srcId + '_src_' + i;
+            map.addSource(stationSrcName, new mapboxgl.GeoJSONSource({
+                data: { type: "Point", coordinates: sta.coords }
+            }));
+                
+            map.addLayer({
+                "id": srcId + '_' + i,
+                "type": "symbol",
+                "source": stationSrcName,
+                "layout": {
+                    "text-field": sta.name,
+                    "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+                    "text-offset": getOffset(anchor, anchorDist),
+                    "text-size" : textSize,
+                    "text-transform" : "uppercase",
+                    "text-anchor": anchor,
+                    //"text-justify": textalign,
+                    "text-line-height" : 0.8
+                },
+                "paint": {
+                    "text-color": textColor,
+                    "text-halo-color": (backColor == undefined ? "#FFFFFF" : backColor),
+                    "text-halo-width": (backColor == undefined ? 1 : 5)
+                }
+            });    
+        }        
+    }
     
     function drawStationLocLayer(srcId, innerRadius) {
         map.addLayer({
@@ -410,9 +645,9 @@ function drawMapForStopId(mapContainerId, agency, stopId, direction) {
             "type": "circle",
             "source": srcId,
             "paint": {
-                "circle-radius": innerRadius + 2,
-                "circle-color": "#444",
-                "circle-opacity": 1
+                "circle-radius": innerRadius + 1,
+                "circle-color": "#555",
+                "circle-opacity": 0.7
             }
         });            
         map.addLayer({

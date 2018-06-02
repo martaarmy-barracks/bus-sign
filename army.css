@@ -17,7 +17,7 @@ body { margin: 0; font-family: "Sweet Sans Pro", "Source Sans Pro", "Montserrat"
 h2, th, .places, .disclaimer, .waypoints, .footer .cell, .stopid {line-height:90%;}
 
 .soldierName { padding-right: 15px; }
-.page12 { position: relative; overflow:hidden; height: 1700px; width:1100px; background-color: #FFF;}
+.page12 { position: relative; overflow:hidden; height: 1697px; width:1100px; background-color: #FFF;}
 .page34 { position: relative; overflow:hidden; height: 1100px; width:1700px; background-color: #FFF;}
 .alt-lang {color:#999; font-style: italic; font-size:70%;}
 
@@ -52,8 +52,8 @@ h2, th, .places, .disclaimer, .waypoints, .footer .cell, .stopid {line-height:90
 .bus .title.CCT { background-color: #cc66ff; }
 .bus .title.GCT { background-color: #c41013; }
 .bus .title.GRTA { background-color: #66cc99; }*/
-.bus .title .origin-destination { font-weight:bold; white-space: nowrap; font-size:24px; padding-top:6px;}
-.bus .title .waypoints { font-size:18px; padding-top:3px; display:none; }
+.bus .title .origin-destination { font-weight:bold; white-space: nowrap; font-size:30px; padding-top:8px; text-transform: capitalize;}
+.bus .title .waypoints { font-size:18px; padding-top:6px; display:none; border:none;}
 
 .bus table { border-collapse:collapse; }
 .bus table.schedule { margin-left: auto; margin-right: auto; clear: both;}
@@ -62,10 +62,24 @@ h2, th, .places, .disclaimer, .waypoints, .footer .cell, .stopid {line-height:90
 .bus table.schedule th:last-child, .bus table.schedule td:last-child { border-right: none; }
 .bus table.schedule td ul { list-style-type: none; padding: 0px; margin:0px; white-space: nowrap; }
 .bus table.schedule td ul li { white-space: nowrap; }
-.bus table.schedule td ul li.ampm-heading { margin:5px 0 -5px 0; padding:0; line-height:100%; text-align:center; background-color:#ddd; font-size:12px; }
 /*.bus table.schedule td ul li.pm { font-weight:bold; }*/
 .bus table.schedule td ul li span {	display: inline-block; width: 2.3em; text-align:left; }
 .bus table.schedule td ul li span:first-child {width: 1.4em; text-align:right;}
+
+.bus table.schedule td ul li.ampm-heading,
+.am:first-of-type:before,
+.pm:first-of-type:before,
+.am + .pm:before,
+.pm + .am:before
+{display:block; margin:5px 0 -5px 0; padding:0; line-height:100%; text-align:center; background-color:#ddd; font-size:12px; }
+.am:first-of-type:before,
+.pm + .am:before {
+	content: "AM";
+}
+.pm:first-of-type:before,
+.am + .pm:before {
+	content: "PM";
+}
 
 
 .footer { clear: both; height: 130px; background-color: #FFFFFF; overflow: hidden; position: relative; }
@@ -92,3 +106,27 @@ strike, .detour {
 	color:#CCFF00;
 }
 
+@media print {
+	#mapOptionsButton,
+	.busMoveUpButton,
+	.sizeField
+	{
+		display:none;
+	}
+}
+#mapOptionsButton {
+	position: absolute;
+	top: 150px;
+	left: 5px;
+	z-index: 101;
+}
+
+#mapOptionsContainer {
+	position:absolute;
+	z-index: 101;
+	top:0;
+	left: 0;
+	background-color: #FFF;
+	min-width:600px;
+	min-height:400px;
+}

@@ -180,6 +180,8 @@ function mapTripidsRouteidsAndShapeids($agency, &$tripid_to_routeid, &$tripid_to
 		$tripid = $row[$TRIPID_INDEX];
 		$shapeid = $row[$SHAPEID_INDEX];
 
+		if ($tripid == 5308783) echo "Found tripid 5308783";
+		
 		$tripid_to_routeid[$tripid] = $routeid;
 		$tripid_to_shapeid[$tripid] = $shapeid;
 		addToArray($routeid_to_tripids, $routeid, $tripid);
@@ -269,7 +271,7 @@ function processStopData($agency) {
 		}
 
 		$stopid = $row[$STOPID_INDEX];
-		$stopcode = $row[$STOPCODE_INDEX];
+		$stopcode = $row[$STOPID_INDEX]; // $row[$STOPCODE_INDEX]; // MARTA started putting random stuff in stop_code, they use stop_id.
 		$name = $row[$STOPNAME_INDEX];
 		$lat = $row[$LAT_INDEX];
 		$lng = $row[$LNG_INDEX];
